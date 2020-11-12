@@ -7,6 +7,7 @@ This is an addon for the Discord API Wrapper [Discord.Net](https://github.com/di
 
 ## Installation
 The package is available to download on [NuGet](https://www.nuget.org/packages/Discord.InteractivityAddon).
+Make sure to use the preview version of this package if you are planning to use the preview of Discord.Net
 
 ## Features
  - Waiting for a message / reaction which passes your filter
@@ -32,7 +33,9 @@ var provider = new ServiceCollection()
                 .AddSingleton(new InteractivityService(Client, TimeSpan.FromMinutes(3)))
                 ....
 ```
-This addon does not include a custom `ModuleBase` in order to support every command framework. (Discord.Net.Command/Qmmands/...)
+This addon does not include a custom `ModuleBase` in order to support every command framework (Discord.Net.Command/Qmmands/...). 
+
+Inject the InteractivityService into your Module using DI instead. (Constructor / Public Property Injection)
 
 ### Example: Waiting for Message
 ```cs
