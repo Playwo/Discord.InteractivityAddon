@@ -37,7 +37,7 @@ This addon does not include a custom `ModuleBase` in order to support every comm
 
 Inject the InteractivityService into your Module using DI instead. (Constructor / Public Property Injection)
 
-### Example: Waiting for Message
+### Example: Waiting for Messages / Reactions
 ```cs
 [Command("nextmessage")]
 public async Task ExampleReplyNextMessageAsync()
@@ -73,7 +73,7 @@ public async Task ExampleSelectionAsync()
 }
 ```
 
-### Example: Paginator
+### Example: Pagination
 ```cs
 [Command("paginator")]
 public Task PaginatorAsync()
