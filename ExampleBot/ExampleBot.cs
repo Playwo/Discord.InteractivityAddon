@@ -28,7 +28,7 @@ namespace ExampleBot_Qmmands
 
         public async Task StartAsync()
         {
-            string discordToken = "NDc4OTM5NDg5NTExNjY5Nzkz.W3LtKA.3Wt4YxXnylI5r9Mg00ONvxyjivc";
+            string discordToken = "";
 
             await Client.LoginAsync(TokenType.Bot, discordToken);     // Login to discord
             await Client.StartAsync();                                // Start message receiving
@@ -85,7 +85,7 @@ namespace ExampleBot_Qmmands
 
         private IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            Client = new DiscordSocketClient(new DiscordSocketConfig { LogLevel = LogSeverity.Verbose, MessageCacheSize = 0 });
+            Client = new DiscordSocketClient(new DiscordSocketConfig { LogLevel = LogSeverity.Verbose, MessageCacheSize = 50 });
 
             return services
                 .AddSingleton(Client)
