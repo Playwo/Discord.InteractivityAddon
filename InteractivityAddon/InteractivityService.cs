@@ -395,11 +395,6 @@ namespace Interactivity
                 {
                     throw new ArgumentException("Message author not current user!");
                 }
-
-                await message.ModifyAsync(x =>
-                {
-                    x.Embed = selection.SelectionEmbed;
-                }).ConfigureAwait(false);
             }
             else
             {
@@ -493,11 +488,6 @@ namespace Interactivity
                 {
                     throw new ArgumentException("Message author not current user!");
                 }
-
-                await message.ModifyAsync(x =>
-                {
-                    x.Embed = selection.SelectionEmbed;
-                }).ConfigureAwait(false);
             }
             else
             {
