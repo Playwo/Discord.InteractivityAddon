@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Discord;
@@ -56,8 +56,8 @@ namespace Interactivity.Confirmation
                 Users?.AsReadOnlyCollection() ?? throw new ArgumentNullException(nameof(Users)),
                 ConfirmEmote ?? throw new ArgumentNullException(nameof(ConfirmEmote)),
                 DeclineEmote ?? throw new ArgumentNullException(nameof(DeclineEmote)),
-                TimeoutedEmbed?.Build() ?? throw new ArgumentNullException(nameof(TimeoutedEmbed)),
-                CancelledEmbed.Build() ?? throw new ArgumentNullException(nameof(CancelledEmbed)),
+                TimeoutedEmbed?.Build(),
+                CancelledEmbed?.Build(),
                 Deletion);
 
         /// <summary>

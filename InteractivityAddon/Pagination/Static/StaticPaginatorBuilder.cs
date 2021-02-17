@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Discord;
@@ -36,8 +36,8 @@ namespace Interactivity.Pagination
 
             return new StaticPaginator(Users?.AsReadOnlyCollection() ?? throw new ArgumentNullException(nameof(Users)),
                                        Emotes?.AsReadOnlyDictionary() ?? throw new ArgumentNullException(nameof(Emotes)),
-                                       CancelledEmbed?.Build() ?? throw new ArgumentNullException(nameof(CancelledEmbed)),
-                                       TimeoutedEmbed?.Build() ?? throw new ArgumentNullException(nameof(TimeoutedEmbed)),
+                                       CancelledEmbed?.Build(),
+                                       TimeoutedEmbed?.Build(),
                                        Deletion,
                                        Pages?.Select(x => x.Build()).AsReadOnlyCollection() ?? throw new ArgumentNullException(nameof(Pages)),
                                        startPage);
