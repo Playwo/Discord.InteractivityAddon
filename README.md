@@ -42,7 +42,7 @@ Inject the InteractivityService into your Module using DI instead. (Constructor 
 [Command("nextmessage")]
 public async Task ExampleReplyNextMessageAsync()
 {
-    var result = await Interactivity.NextMessageAsync(x => x.Author == Context.User);
+    var result = await Interactivity.NextMessageAsync(x => x.Author.Id == Context.User.Id);
 
     if (result.IsSuccess == true) {
         Interactivity.DelayedSendMessageAndDeleteAsync(
