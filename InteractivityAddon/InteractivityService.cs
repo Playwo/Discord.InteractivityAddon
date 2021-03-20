@@ -329,7 +329,7 @@ namespace Interactivity
 
             if (message != null)
             {
-                if (message.Author != Client.CurrentUser)
+                if (message.Author.Id != Client.CurrentUser.Id)
                 {
                     throw new ArgumentException("Message author not current user!");
                 }
@@ -449,7 +449,7 @@ namespace Interactivity
 
             if (message != null)
             {
-                if (selection is ReactionSelection<TValue> && message.Author != Client.CurrentUser)
+                if (selection is ReactionSelection<TValue> && message.Author.Id != Client.CurrentUser.Id)
                 {
                     throw new ArgumentException("Cannot use message from different user!");
                 }
@@ -561,7 +561,7 @@ namespace Interactivity
 
             if (message != null)
             {
-                if (selection is MessageSelection<TValue> && message.Author != Client.CurrentUser)
+                if (selection is MessageSelection<TValue> && message.Author.Id != Client.CurrentUser.Id)
                 {
                     throw new ArgumentException("Cannot use message from different user!");
                 }
@@ -575,7 +575,7 @@ namespace Interactivity
 
             async Task CheckMessageAsync(SocketMessage m)
             {
-                if (m.Author == Client.CurrentUser)
+                if (m.Author.Id == Client.CurrentUser.Id)
                 {
                     return;
                 }
@@ -669,7 +669,7 @@ namespace Interactivity
 
             if (message != null)
             {
-                if (message.Author != Client.CurrentUser)
+                if (message.Author.Id != Client.CurrentUser.Id)
                 {
                     throw new ArgumentException("Message author not current user!");
                 }
