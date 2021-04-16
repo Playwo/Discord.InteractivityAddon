@@ -124,3 +124,9 @@ public async Task ConfirmAsync()
     }
 }
 ```
+
+## Troubleshooting
+
+ >  A MessageReceived handler is blocking the gateway task.
+
+If you are getting this error and you are using the `Discord.Commands` `ModuleBase` class as a base for your commands, make sure your commands are running asynchronously (eg. by using `RunMode = RunMode.Async`).
