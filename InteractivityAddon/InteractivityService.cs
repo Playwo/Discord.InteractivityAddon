@@ -24,7 +24,7 @@ namespace Interactivity
         public TimeSpan DefaultTimeout { get; }
 
         /// <summary>
-        /// Whether to run the internal event handlers used for interactivity in a seperate task.
+        /// Whether to run the internal event handlers used for interactivity in a separate task.
         /// This should be used to prevent blocking the gateway during high loads.
         /// </summary>
         public bool RunOnGateway { get; }
@@ -33,29 +33,27 @@ namespace Interactivity
         /// Creates a new instance of <see cref="InteractivityService"/>.
         /// </summary>
         /// <param name="client">Your instance of <see cref="BaseSocketClient"/>.</param>
-        /// <param name="defaultTimeout">The default timeout for this <see cref="InteractivityService"/>.</param>
-        /// <param name="runOnGateway">Whether to run the internal event handlers used for interactivity in a seperate task.</param>
-        public InteractivityService(BaseSocketClient client, TimeSpan? defaultTimeout = null, bool runOnGateway = true)
+        /// <param name="config">The configuration to use.  If none is provided <see cref="InteractivityConfig.Default"/> will be used.</param>
+        public InteractivityService(BaseSocketClient client, InteractivityConfig config = null)
         {
-            Client = client ?? throw new ArgumentNullException("client cannot be null");
-            RunOnGateway = runOnGateway;
+            Client = client ?? throw new ArgumentNullException(nameof(client));
+            config ??= InteractivityConfig.Default;
 
-            DefaultTimeout = defaultTimeout ?? TimeSpan.FromSeconds(45);
+            RunOnGateway = config.RunOnGateway;
+
+            DefaultTimeout = config.DefaultTimeout;
 
             if (DefaultTimeout <= TimeSpan.Zero)
-            {
                 throw new Exception("Timespan cannot be negative or zero");
-            }
         }
 
         /// <summary>
         /// Creates a new instance of <see cref="InteractivityService"/>.
         /// </summary>
         /// <param name="client">Your instance of <see cref="DiscordSocketClient"/>.</param>
-        /// <param name="defaultTimeout">The default timeout for this <see cref="InteractivityService"/>.</param>
-        /// <param name="runOnGateway">Whether to run the internal event handlers used for interactivity in a seperate task.</param>
-        public InteractivityService(DiscordSocketClient client, TimeSpan? defaultTimeout = null, bool runOnGateway = true)
-            : this((BaseSocketClient) client, defaultTimeout, runOnGateway)
+        /// <param name="config">The configuration to use.</param>
+        public InteractivityService(DiscordSocketClient client, InteractivityConfig config = null)
+            : this((BaseSocketClient) client, config)
         {
         }
 
@@ -63,10 +61,9 @@ namespace Interactivity
         /// Creates a new instance of <see cref="InteractivityService"/>.
         /// </summary>
         /// <param name="client">Your instance of <see cref="DiscordShardedClient"/>.</param>
-        /// <param name="defaultTimeout">The default timeout for this <see cref="InteractivityService"/>.</param>
-        /// <param name="runOnGateway">Whether to run the internal event handlers used for interactivity in a seperate task.</param>
-        public InteractivityService(DiscordShardedClient client, TimeSpan? defaultTimeout = null, bool runOnGateway = true)
-            : this((BaseSocketClient) client, defaultTimeout, runOnGateway)
+        /// <param name="config">The configuration to use.</param>
+        public InteractivityService(DiscordShardedClient client, InteractivityConfig config = null)
+            : this((BaseSocketClient) client, config)
         {
         }
 
