@@ -28,7 +28,7 @@ namespace ExampleBot_Qmmands
 
         public async Task StartAsync()
         {
-            string discordToken = "";
+            var discordToken = "Your Token Here";
 
             await Client.LoginAsync(TokenType.Bot, discordToken);     // Login to discord
             await Client.StartAsync();                                // Start message receiving
@@ -38,9 +38,9 @@ namespace ExampleBot_Qmmands
                 Console.WriteLine(x.Message);
                 return Task.CompletedTask;
             };
-            Commands.CommandErrored += (result, ctx, provider) =>
+            Commands.CommandExecutionFailed += args =>
             {
-                Console.WriteLine(result.Exception.ToString());
+                Console.WriteLine(args.Result.Exception.ToString());
 
                 return Task.CompletedTask;
             };
@@ -62,18 +62,19 @@ namespace ExampleBot_Qmmands
                     return;
                 }
 
-                var context = new ExampleCommandContext(msg);
+                var context = new ExampleCommandContext(msg, Provider);
 
                 if (!CommandUtilities.HasAnyPrefix(msg.Content, new[] { "!" }, StringComparison.OrdinalIgnoreCase, out string usedPrefix, out string cmd))
                 {
                     return;
                 }
 
-                var result = await Commands.ExecuteAsync(cmd, context, Provider); //Try to run Command
+                var result = await Commands.ExecuteAsync(cmd, context); //Try to run Command
+                // Commands.ExecuteAsync()
 
                 if (result is FailedResult failResult)
                 {
-                    await context.Channel.SendMessageAsync(failResult.Reason);
+                    await context.Channel.SendMessageAsync(failResult.FailureReason);
                 }
 
                 return;
@@ -84,12 +85,11 @@ namespace ExampleBot_Qmmands
 
         private IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            Client = new DiscordSocketClient(new DiscordSocketConfig { LogLevel = LogSeverity.Verbose, MessageCacheSize = 50 });
-
             return services
-                .AddSingleton(Client)
-                .AddSingleton(new CommandService(new CommandServiceConfiguration { CaseSensitive = false, IgnoreExtraArguments = false, DefaultRunMode = RunMode.Parallel }))
-                .AddSingleton(new InteractivityService(Client, TimeSpan.FromSeconds(20), false))
+                .AddSingleton(new DiscordSocketClient(new DiscordSocketConfig { LogLevel = LogSeverity.Verbose, MessageCacheSize = 50 }))
+                .AddSingleton(new CommandService(new CommandServiceConfiguration { DefaultRunMode = RunMode.Parallel }))
+                .AddSingleton<InteractivityService>()
+                .AddSingleton(new InteractivityConfig { DefaultTimeout = TimeSpan.FromSeconds(20), RunOnGateway = false})
                 .BuildServiceProvider();
         }
     }
