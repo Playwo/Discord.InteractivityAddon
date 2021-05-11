@@ -60,7 +60,6 @@ namespace ExampleBot_Qmmands
                 if (!CommandUtilities.HasAnyPrefix(msg.Content, new[] { "!" }, StringComparison.OrdinalIgnoreCase, out var usedPrefix, out var cmd))
                     return;
                 
-
                 var result = await Commands.ExecuteAsync(cmd, context); //Try to run Command
 
                 if (result is FailedResult failResult)
