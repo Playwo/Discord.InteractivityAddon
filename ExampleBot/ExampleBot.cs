@@ -41,43 +41,30 @@ namespace ExampleBot_Qmmands
             Commands.CommandExecutionFailed += args =>
             {
                 Console.WriteLine(args.Result.Exception.ToString());
-
                 return Task.CompletedTask;
             };
 
             Client.MessageReceived += async s =>
             {
-                if (!(s is SocketUserMessage msg))
-                {
+                if (s is not SocketUserMessage msg)
                     return; //Do some checks
-                }
-
+                
                 if (msg.Author.IsBot)
-                {
                     return;
-                }
 
                 if (msg.Author.Id == Client.CurrentUser.Id)
-                {
                     return;
-                }
 
                 var context = new ExampleCommandContext(msg, Provider);
 
-                if (!CommandUtilities.HasAnyPrefix(msg.Content, new[] { "!" }, StringComparison.OrdinalIgnoreCase, out string usedPrefix, out string cmd))
-                {
+                if (!CommandUtilities.HasAnyPrefix(msg.Content, new[] { "!" }, StringComparison.OrdinalIgnoreCase, out var usedPrefix, out var cmd))
                     return;
-                }
+                
 
                 var result = await Commands.ExecuteAsync(cmd, context); //Try to run Command
-                // Commands.ExecuteAsync()
 
                 if (result is FailedResult failResult)
-                {
                     await context.Channel.SendMessageAsync(failResult.FailureReason);
-                }
-
-                return;
             };
 
             await Task.Delay(-1);                                     //Wait forever to keep the bot running
