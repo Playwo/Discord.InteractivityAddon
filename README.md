@@ -29,7 +29,8 @@ To properly use the features this addon provides you need to add the `Interactiv
 
 ```cs
 var provider = new ServiceCollection()
-                .AddSingleton(new InteractivityService(Client, TimeSpan.FromMinutes(3)))
+                .AddSingleton<InteractivityService>()
+                .AddSingleton(new InteractivityConfig { DefaultTimeout = TimeSpan.FromSeconds(20) }) // You can optionally add a custom config
                 ....
 ```
 This addon does not include a custom `ModuleBase` in order to support every command framework (Discord.Net.Command/Qmmands/...). 
