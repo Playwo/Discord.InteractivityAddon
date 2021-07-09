@@ -4,6 +4,7 @@ on:
   push:
     branches:
     - main
+    - labs
 
 jobs:
   Build-And-Publish:
