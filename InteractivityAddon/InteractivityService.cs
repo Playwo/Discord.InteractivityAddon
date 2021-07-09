@@ -291,6 +291,130 @@ namespace Interactivity
             }
         }
 
+        public async Task<InteractivityResult<SocketMessageComponent>> NextMessageComponentAsync(Predicate<SocketMessageComponent> filter = null, Func<SocketMessageComponent, bool, Task> actions = null,
+            TimeSpan? timeout = null, bool? runOnGateway = null, CancellationToken cancellationToken = default)
+        {
+            var startTime = DateTime.UtcNow;
+
+            actions ??= ((s, v) => Task.CompletedTask);
+            filter ??= (s => true);
+
+            var componentSource = new TaskCompletionSource<InteractivityResult<SocketMessageComponent>>();
+            var cancelSource = new TaskCompletionSource<bool>();
+
+            var cancellationRegistration = cancellationToken.Register(() => cancelSource.SetResult(true));
+
+            var componentTask = componentSource.Task;
+            var cancelTask = cancelSource.Task;
+            var timeoutTask = Task.Delay(timeout ?? DefaultTimeout);
+
+            async Task CheckComponentAsync(SocketMessageComponent s)
+            {
+                if (!filter.Invoke(s))
+                {
+                    await actions.Invoke(s, true).ConfigureAwait(false);
+                    return;
+                }
+
+                await actions.Invoke(s, false).ConfigureAwait(false);
+                componentSource.SetResult(new InteractivityResult<SocketMessageComponent>(s, s.CreatedAt - startTime, false, false));
+            }
+            async Task HandleInteractionAsync(SocketInteraction interaction)
+            {
+                if(interaction is SocketMessageComponent component)
+                {
+                    if (runOnGateway ?? RunOnGateway)
+                    {
+                        await CheckComponentAsync(component);
+                    }
+                    else
+                    {
+                        _ = Task.Run(() => CheckComponentAsync(component));
+                    }
+                }
+            }
+
+            try
+            {
+                Client.InteractionCreated += HandleInteractionAsync;
+
+                var result = await Task.WhenAny(componentTask, timeoutTask, cancelTask).ConfigureAwait(false);
+
+                return result == componentTask
+                    ? await componentTask.ConfigureAwait(false)
+                    : result == timeoutTask
+                        ? new InteractivityResult<SocketMessageComponent>(default, timeout ?? DefaultTimeout, true, false)
+                        : new InteractivityResult<SocketMessageComponent>(default, DateTime.UtcNow - startTime, false, true);
+            }
+            finally
+            {
+                Client.InteractionCreated -= HandleInteractionAsync;
+                cancellationRegistration.Dispose();
+            }
+        }
+
+        public async Task<InteractivityResult<SocketSlashCommand>> NextSlashCommandAsync(Predicate<SocketSlashCommand> filter = null, Func<SocketSlashCommand, bool, Task> actions = null,
+            TimeSpan? timeout = null, bool? runOnGateway = null, CancellationToken cancellationToken = default)
+        {
+            var startTime = DateTime.UtcNow;
+
+            actions ??= ((s, v) => Task.CompletedTask);
+            filter ??= (s => true);
+
+            var commandSource = new TaskCompletionSource<InteractivityResult<SocketSlashCommand>>();
+            var cancelSource = new TaskCompletionSource<bool>();
+
+            var cancellationRegistration = cancellationToken.Register(() => cancelSource.SetResult(true));
+
+            var commandTask = commandSource.Task;
+            var cancelTask = cancelSource.Task;
+            var timeoutTask = Task.Delay(timeout ?? DefaultTimeout);
+
+            async Task CheckSlashCommandAsync(SocketSlashCommand s)
+            {
+                if (!filter.Invoke(s))
+                {
+                    await actions.Invoke(s, true).ConfigureAwait(false);
+                    return;
+                }
+
+                await actions.Invoke(s, false).ConfigureAwait(false);
+                commandSource.SetResult(new InteractivityResult<SocketSlashCommand>(s, s.CreatedAt - startTime, false, false));
+            }
+            async Task HandleInteractionAsync(SocketInteraction interaction)
+            {
+                if (interaction is SocketSlashCommand component)
+                {
+                    if (runOnGateway ?? RunOnGateway)
+                    {
+                        await CheckSlashCommandAsync(component);
+                    }
+                    else
+                    {
+                        _ = Task.Run(() => CheckSlashCommandAsync(component));
+                    }
+                }
+            }
+
+            try
+            {
+                Client.InteractionCreated += HandleInteractionAsync;
+
+                var result = await Task.WhenAny(commandTask, timeoutTask, cancelTask).ConfigureAwait(false);
+
+                return result == commandTask
+                    ? await commandTask.ConfigureAwait(false)
+                    : result == timeoutTask
+                        ? new InteractivityResult<SocketSlashCommand>(default, timeout ?? DefaultTimeout, true, false)
+                        : new InteractivityResult<SocketSlashCommand>(default, DateTime.UtcNow - startTime, false, true);
+            }
+            finally
+            {
+                Client.InteractionCreated -= HandleInteractionAsync;
+                cancellationRegistration.Dispose();
+            }
+        }
+
         /// <summary>
         /// Waits for a user/users to confirm something.
         /// </summary>
