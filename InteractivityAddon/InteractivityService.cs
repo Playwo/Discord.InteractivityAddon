@@ -291,6 +291,15 @@ namespace Interactivity
             }
         }
 
+        /// <summary>
+        /// Waits for a button or select menu to be sent that passes the <paramref name="filter"/>.
+        /// </summary>
+        /// <param name="filter">The <see cref="Criteria{SocketMessageComponent}"/> which the component has to pass.</param>
+        /// <param name="actions">The <see cref="ActionCollection{SocketMessageComponent}"/> which gets executed to incoming component.</param>
+        /// <param name="timeout">The time to wait before the methods retuns a timeout result.</param>
+        /// <param name="runOnGateway">Whether to run the internal event handlers used for interactivity in a seperate task.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to cancel the request.</param>
+        /// <returns></returns>
         public async Task<InteractivityResult<SocketMessageComponent>> NextMessageComponentAsync(Predicate<SocketMessageComponent> filter = null, Func<SocketMessageComponent, bool, Task> actions = null,
             TimeSpan? timeout = null, bool? runOnGateway = null, CancellationToken cancellationToken = default)
         {
@@ -353,6 +362,15 @@ namespace Interactivity
             }
         }
 
+        /// <summary>
+        /// Waits for a slash command to be sent that passes the <paramref name="filter"/>.
+        /// </summary>
+        /// <param name="filter">The <see cref="Criteria{SocketSlashCommand}"/> which the command has to pass.</param>
+        /// <param name="actions">The <see cref="ActionCollection{SocketSlashCommand}"/> which gets executed to incoming slash commands.</param>
+        /// <param name="timeout">The time to wait before the methods retuns a timeout result.</param>
+        /// <param name="runOnGateway">Whether to run the internal event handlers used for interactivity in a seperate task.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to cancel the request.</param>
+        /// <returns></returns>
         public async Task<InteractivityResult<SocketSlashCommand>> NextSlashCommandAsync(Predicate<SocketSlashCommand> filter = null, Func<SocketSlashCommand, bool, Task> actions = null,
             TimeSpan? timeout = null, bool? runOnGateway = null, CancellationToken cancellationToken = default)
         {
