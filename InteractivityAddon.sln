@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29209.152
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InteractivityAddon", "InteractivityAddon\InteractivityAddon.csproj", "{82B2F355-4602-40D8-B877-712F1111F852}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InteractivityAddon.Labs", "InteractivityAddon\InteractivityAddon.Labs.csproj", "{82B2F355-4602-40D8-B877-712F1111F852}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{9F1EAFD3-034D-4AB5-9D3E-3B4C1AECF4B8}"
 EndProject

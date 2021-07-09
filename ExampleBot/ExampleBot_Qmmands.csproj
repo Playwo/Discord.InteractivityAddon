@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\InteractivityAddon\InteractivityAddon.csproj" />
+    <ProjectReference Include="..\InteractivityAddon\InteractivityAddon.Labs.csproj" />
   </ItemGroup>
 
 </Project>

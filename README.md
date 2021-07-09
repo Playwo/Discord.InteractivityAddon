@@ -1,12 +1,12 @@
 # Discord.InteractivityAddon
 
-[![NuGet](https://img.shields.io/nuget/vpre/Discord.InteractivityAddon.svg?style=plastic)](https://www.nuget.org/packages/Discord.InteractivityAddon)
+[![NuGet](https://img.shields.io/nuget/vpre/Discord.InteractivityAddon.Labs.svg?style=plastic)](https://www.nuget.org/packages/Discord.InteractivityAddon.Labs)
 [![TechFacility](https://img.shields.io/discord/512366986383065088.svg?style=flat-square&label=discord)](https://discord.gg/H7FzMt3)
 
-This is an addon for the Discord API Wrapper [Discord.Net](https://github.com/discord-net/Discord.Net) which makes it easy to add interactivity to your discord bot.
+This is an addon for the Discord API Wrapper [Discord.Net-Labs](https://github.com/discord-net-labs/Discord.Net-Labs) which makes it easy to add interactivity to your discord bot.
 
 ## Installation
-The package is available to download on [NuGet](https://www.nuget.org/packages/Discord.InteractivityAddon).
+The package is available to download on [NuGet](https://www.nuget.org/packages/Discord.InteractivityAddon.Labs).
 Make sure to use the preview version of this package if you are planning to use the preview of Discord.Net
 
 ## Features

@@ -3,9 +3,9 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>latest</LangVersion>
-    <AssemblyName>Discord.InteractivityAddon</AssemblyName>
+    <AssemblyName>Discord.InteractivityAddon.Labs</AssemblyName>
     <RootNamespace>Interactivity</RootNamespace>
-    <Version>2.4.1-preview-20210624.1</Version>
+    <Version>2.4.1-labs-20210709.1</Version>
     <RepositoryUrl>https://github.com/Playwo/Discord.InteractivityAddon</RepositoryUrl>
     <AssemblyVersion>2.4.1</AssemblyVersion>
     <FileVersion>2.4.1</FileVersion>
