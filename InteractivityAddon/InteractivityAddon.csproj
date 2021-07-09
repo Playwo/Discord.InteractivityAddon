@@ -46,6 +46,7 @@
 
 
   <ItemGroup>
-    <PackageReference Include="Discord.Net.Labs" Version="2.4.5" />
+    <PackageReference Include="Discord.Net.Labs.Core" Version="2.4.3" />
+    <PackageReference Include="Discord.Net.Labs.WebSocket" Version="2.4.5" />
   </ItemGroup>
 </Project>
